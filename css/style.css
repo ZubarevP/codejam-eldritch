@@ -70,9 +70,9 @@ body {
   position: fixed;
   top: 1vw;
   left: 1vw;
-  height: 5vw;
-  width: 5vw;
-  border-radius: 5vw;
+  height: 70px;
+  width: 70px;
+  border-radius: 70px;
   background-color: #a02e30;
   outline: none;
   border: none;
@@ -91,7 +91,7 @@ body {
   position: fixed;
   width: 20vw;
   top: 20%;
-  right: -20vw;
+  right: -30vw;
   list-style: none;
   color: white;
 }
@@ -112,11 +112,10 @@ body {
 
 .level:hover {
   opacity: .8;
-  transform:  translate(-50vw) scale(1.05);
 }
 
 .level-active {
-  transform: translate(-50vw);
+  transform: translate(-60vw);
 }
 
 .level + .level {
@@ -143,6 +142,16 @@ body {
   box-shadow: 1px 1px 15px 5px #a02e30;
 }
 
+.desk{
+  position: fixed;
+  top: 50%;
+  right: 50%; 
+  width: 40vw;
+  height: 20vw;
+  background: silver;
+  transform: translate(50%, -50%);
+  opacity: .5;
+}
 
 
 
