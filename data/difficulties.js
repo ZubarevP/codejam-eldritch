@@ -1,4 +1,8 @@
-const difficulties = [
+export difficulties = [
+  {
+    id: "extra easy",
+    name: "Очень низкая"
+  }
   {
     id: 'easy',
     name: 'Низкая'
@@ -11,6 +15,8 @@ const difficulties = [
     id: 'hard',
     name: 'Высокая'
   },
+  {
+    id: "extra hard",
+    name: "Очень высокая"
+  }
 ]
-
-export default difficulties
