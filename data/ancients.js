@@ -1,8 +1,6 @@
-export ancientsData = [
-  {
-    id: 'azathoth',
+export const ancientsData = {
+  azathoth: {
     name: 'azathoth',
-    cardFace: Ancients.azathoth,
     firstStage: {
       greenCards: 1,
       blueCards: 1,
@@ -19,10 +17,8 @@ export ancientsData = [
       brownCards: 4,
     },
   },
-  {
-    id: 'cthulhu',
+  cthulhu: {
     name: 'cthulhu',
-    cardFace: Ancients.cthulhu,
     firstStage: {
       greenCards: 0,
       blueCards: 2,
@@ -39,10 +35,8 @@ export ancientsData = [
       brownCards: 4,
     },
   },
-  {
-    id: 'iogSothoth',
+  iogSothoth: {
     name: 'iogSothoth',
-    cardFace: Ancients.iogSothoth,
     firstStage: {
       greenCards: 0,
       blueCards: 1,
@@ -59,10 +53,8 @@ export ancientsData = [
       brownCards: 4,
     },
   },
-  {
-    id: 'shubNiggurath',
+  shubNiggurath: {
     name: 'shubNiggurath',
-    cardFace: Ancients.shubNiggurath,
     firstStage: {
       greenCards: 1,
       blueCards: 1,
@@ -79,4 +71,4 @@ export ancientsData = [
       brownCards: 4,
     },
   },
-]
+}

@@ -1,5 +1,19 @@
+import {ancientsData} from "../../data/ancients.js";
+
 const ancients = document.querySelectorAll(".ancients-img");
 const start = document.querySelector(".start");
+
+function showCards(levelElem, ancientElem) {
+  const level = levelElem.getAttribute("data-name");
+  const ancient = ancientElem.getAttribute("data-name");
+}
+
+function chooseLavel(target) {
+  document.querySelectorAll(".level").forEach((elem, ind)=>{
+    elem.onclick = function (e) {showCards(e.target, target);}; 
+    setTimeout(()=> elem.classList.add("level-active"), ((ind * 100) + 1500))
+  });
+}
 
 function chooseAncient(e) {
   document.querySelectorAll(".ancients-img")
@@ -9,6 +23,8 @@ function chooseAncient(e) {
         setTimeout(()=>elem.classList.add("hidden-none"), 1000);
       } else {
         ///////////////////////////////////////////
+        chooseLavel(e.target);
+        ///////////////////////////////////////////
         start.classList.remove("hidden-none");
         setTimeout(()=>start.classList.remove("hidden"), 1000);
         setTimeout(()=>{
@@ -17,7 +33,6 @@ function chooseAncient(e) {
         }, 1000);
       } 
     })
-    
 }
 
 function startGame(e) {
@@ -26,8 +41,9 @@ function startGame(e) {
       elem.classList.add("max");
       elem.classList.remove("ancients-img-active");
       elem.classList.remove("hidden-none");
-      elem.classList.remove("hidden");
+      setTimeout(()=>elem.classList.remove("hidden"), 1000);
    });
+   document.querySelectorAll(".level").forEach(elem=>elem.classList.remove("level-active"));
    e.target.classList.add("hidden");
    setTimeout(()=>e.target.classList.add("hidden-none"), 1000);
   }
