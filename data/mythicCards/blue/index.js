@@ -1,4 +1,4 @@
-const from = '../../assets/mythicCards/blue/';
+const from = './assets/mythic_cards/blue/';
 
 export const blueCardsData = [
   {

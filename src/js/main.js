@@ -3,12 +3,9 @@ import {brownCardsData} from "../../data/mythicCards/brown/index.js";
 import {blueCardsData} from "../../data/mythicCards/blue/index.js";
 import {greenCardsData} from "../../data/mythicCards/green/index.js";
 
-
-// green blue brown 
-
-
 const ancients = document.querySelectorAll(".ancients-img");
 const start = document.querySelector(".start");
+let levelPass = true;
 
 function choseLavelBodyColor(level) {
   let str = "inset 0px 0px 15px 0px ";
@@ -61,8 +58,8 @@ function getRandomNumExcept(num, min, max) {
 
 function interfereCardDesk(array){
   for(let i = 0; i < array.length * 3; i++) {
-    let a = getRandomNum(0, array.length - 1);
-    let b = getRandomNumExcept(a, 0, array.length - 1);
+    let a = getRandomNum(0, array.length);
+    let b = getRandomNumExcept(a, 0, array.length);
     let temp = array[a];
     array[a] = array[b];
     array[b] = temp;
@@ -80,9 +77,81 @@ function getCardDesk(level) {
   }
 }
 
-function showScheme(scheme) {
-
+function createCardBack(scheme, cardDesk) {
+  let img = document.createElement("img"); 
+  img.setAttribute("src", "./assets/mythicCardBackground.png");
+  img.setAttribute("class", "desk-back");
+  img.setAttribute("alt", "card back side");
+  img.onclick = ()=>showNextCard(scheme, cardDesk);
+  document.querySelector(".desk").append(img);
 }
+
+  /////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////
+
+function getScoreNumElem(elem){
+  return [
+   elem.querySelector(".score-green"),
+   elem.querySelector(".score-brown"),
+   elem.querySelector(".score-blue"),
+ ];
+}
+
+function getScoreElem(selector) {
+  return document.querySelector(selector);
+}
+
+function getScoreTable(arr) {
+  return arr.map(elem=>getScoreNumElem(getScoreElem(elem)));
+}
+
+function showCardScheme(scheme) {
+  let table =  getScoreTable(
+    [".score-level-one", ".score-level-two", ".score-level-three"]
+  ); 
+  table
+    .forEach((elemTop, indTop)=>elemTop
+      .forEach((elem, ind)=>elem.textContent = scheme[indTop][ind]));
+}
+
+let currentLevel = 0;
+
+function createDeskFace(pathToFace) {
+  let desk = document.querySelector(".desk");
+  let img = document.createElement("img");
+  img.setAttribute("class", "desk-face");
+  img.setAttribute("src", pathToFace);
+  img.setAttribute("alt", "front of card");
+  desk.append(img);
+}
+
+
+function showNextCard(scheme, cards, max = 3) {
+  let cont = getRandomNum(0, max);
+  while(scheme[currentLevel][cont] == 0)  {
+    cont = (cont + getRandomNum(0, 200)) % max;
+  }
+
+  let deskFace = document.querySelector(".desk-face");
+  let pathToFace = cards[cont].pop().cardFace + ".png";
+  deskFace ? 
+    deskFace.setAttribute("src", pathToFace) : 
+    createDeskFace(pathToFace);
+  --scheme[currentLevel][cont];
+  showCardScheme(scheme);
+
+  let levelSum = scheme[currentLevel].reduce((sum, elem) => sum + elem, 0);
+  if(levelSum == 0) {
+    if(++currentLevel == max) {
+      let elem = document.querySelector(".desk-back");
+      elem.remove();
+    };
+  }
+}
+  /////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////
 
 function showCards(levelElem, ancientElem) {
   document.querySelectorAll(".level").forEach((elem, ind)=>{
@@ -95,7 +164,14 @@ function showCards(levelElem, ancientElem) {
   /////////////////////////////////////////////////////
   /////////////////////////////////////////////////////
   const cardDesk = getCardDesk(level);
-  const scheme = ancientsData[ancient];
+  const scheme = JSON.parse(JSON.stringify(ancientsData[ancient]));
+  
+  setTimeout(()=>{
+    document.querySelector(".desk").classList.add("desk-active");
+    document.querySelector(".score").classList.add("score-active");
+  }, 1000);
+  showCardScheme(scheme);
+  createCardBack(scheme, cardDesk);
 
   /////////////////////////////////////////////////////
   /////////////////////////////////////////////////////
@@ -104,7 +180,13 @@ function showCards(levelElem, ancientElem) {
 
 function chooseLavel(target) {
   document.querySelectorAll(".level").forEach((elem, ind)=>{
-    elem.onclick = function (e) {showCards(e.target, target);}; 
+    elem.onclick = function (e) {
+      if(levelPass) {
+        levelPass = false;
+        setTimeout(()=>levelPass = true, 1000);
+        showCards(e.target, target);
+      }
+    }; 
     setTimeout(()=> elem.classList.add("level-active"), ((ind * 100) + 1500))
   });
 }
@@ -133,17 +215,36 @@ function chooseAncient(e) {
 
 function startGame(e) {
   if(e.target.closest(".start")) {
+
    ancients.forEach(elem=>{
       elem.classList.add("max");
       elem.classList.remove("ancients-img-active");
       elem.classList.remove("hidden-none");
       setTimeout(()=>elem.classList.remove("hidden"), 1000);
-   });
+     });
    document.querySelectorAll(".level")
       .forEach(elem=>elem.classList.remove("level-active"));
+
    document.querySelector("body").style.boxShadow  = "none";
+
+   let desk_back = document.querySelector(".desk-back");
+   desk_back ? desk_back.remove(): null;
+
+   let desk_face = document.querySelector(".desk-face");
+   desk_face ? desk_face.remove(): null;
+
+   const desk = document.querySelector(".desk");
+    desk.classList.add("hidden");
+    setTimeout(()=>desk.classList.remove("desk-active"), 500);
+    setTimeout(()=>desk.classList.remove("hidden"), 900);
+   const score = document.querySelector(".score");
+    score.classList.add("hidden");
+    setTimeout(()=>score.classList.remove("score-active"), 500);
+    setTimeout(()=>score.classList.remove("hidden"), 900);
+
    e.target.classList.add("hidden");
    setTimeout(()=>e.target.classList.add("hidden-none"), 1000);
+    currentLevel = 0;
   }
 }
 
