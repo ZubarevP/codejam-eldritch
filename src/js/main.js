@@ -8,13 +8,24 @@ const start = document.querySelector(".start");
 let levelPass = true;
 
 function choseLavelBodyColor(level) {
-  let str = "inset 0px 0px 15px 0px ";
+  let str = "inset 0px 0px 45px 0px ";
   switch(level) {
-    case "extra-easy" : return str + "white"; 
-    case "easy"       : return str + "#7ff57f"; 
-    case "normal"     : return str + "#6b6bf1"; 
-    case "hard"       : return str + "#ffc480"; 
-    case "extra-hard" : return str + "#a02e30"; 
+    case "extra-easy" : return str + "#c9c9c9"; 
+    case "easy"       : return str + "#3ea7a6"; 
+    case "normal"     : return str + "#a7973e"; 
+    case "hard"       : return str + "#a73e3e"; 
+    case "extra-hard" : return str + "#940a0a"; 
+  }
+}
+
+
+function ancientShadow(ancient) {
+  let str  = "1px 1px 15px 5px ";
+  switch(ancient) {
+    case "cthulthu"      : return str + "#c46521";
+    case "shubNiggurath" : return str + "#8c6d8f";
+    case "iogSothoth"    : return str + "#5b1d05";
+    case "azathoth"      : return str + "#47500e";
   }
 }
 
@@ -205,6 +216,7 @@ function chooseAncient(e) {
           start.classList.remove("hidden-none");
           setTimeout(()=>start.classList.remove("hidden"), 1000);
           setTimeout(()=>{
+            elem.style.boxShadow = ancientShadow(elem.getAttribute("data-name")); 
             elem.classList.add("ancients-img-active");
             elem.classList.remove("max");
           }, 1000);
@@ -219,6 +231,7 @@ function startGame(e) {
    ancients.forEach(elem=>{
       elem.classList.add("max");
       elem.classList.remove("ancients-img-active");
+      elem.style.boxShadow = "none"; 
       elem.classList.remove("hidden-none");
       setTimeout(()=>elem.classList.remove("hidden"), 1000);
      });
