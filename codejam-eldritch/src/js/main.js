@@ -25,7 +25,7 @@ let levelPass = true;
 
 function createCardBack(scheme, cardDesk) {
   let img = document.createElement("img"); 
-  img.setAttribute("src", "./assets/mythicCardBackground.png");
+  img.setAttribute("src", "./assets/mythicCardBackground.webp");
   img.setAttribute("class", "desk-back");
   img.setAttribute("alt", "card back side");
   img.onclick = ()=>showNextCard(scheme, cardDesk);
@@ -48,7 +48,7 @@ function showNextCard(scheme, cards, max = 3) {
   }
 
   let deskFace = document.querySelector(".desk-face");
-  let pathToFace = cards[cont].pop().cardFace + ".png";
+  let pathToFace = cards[cont].pop().cardFace + ".webp";
   deskFace ? 
     deskFace.setAttribute("src", pathToFace) : 
     createDeskFace(pathToFace);
