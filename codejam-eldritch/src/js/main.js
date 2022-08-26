@@ -9,7 +9,8 @@ import {
   getCardDeck,
   interfereCardDesk,
   getRandomNum,
-  getCardDeckBylevel
+  getCardDeckBylevel,
+  getStringWithLevelMessage
 } from "./modules/cardDeck.js";
 
 import{
@@ -79,6 +80,11 @@ function showCards(levelElem, ancientElem) {
     document.querySelector(".desk").classList.add("desk-active");
     document.querySelector(".score").classList.add("score-active");
   }, 1000);
+
+  document
+    .querySelector(".score-current-level")
+    .textContent = getStringWithLevelMessage(level);
+
   showCardScheme(scheme);
   createCardBack(scheme, cardDesk);
 }
@@ -95,6 +101,7 @@ function chooseLevel(target) {
     setTimeout(()=> elem.classList.add("level-active"), ((ind * 100) + 1500))
   });
 }
+
 
 function chooseAncient(e) {
   if(document.querySelector(".start").classList.contains("hidden")){

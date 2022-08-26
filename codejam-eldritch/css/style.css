@@ -226,6 +226,7 @@ body {
   right: 25px; 
   width: 20vw;
   height: 14vw;
+  height: 16vw;
 
   display: flex;
   flex-direction: column;
@@ -233,6 +234,14 @@ body {
 
   border-radius: 5px;
   transition: .3s;
+}
+.score-current-level {
+  text-align:center;
+  font-size: 35px;
+  font-family:"IMFell";
+  text-shadow: 0 3px black;
+  color:#7c8181;
+  line-height: 60px;
 }
 
 .score-active {
