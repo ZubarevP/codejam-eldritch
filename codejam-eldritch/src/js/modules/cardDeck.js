@@ -12,6 +12,17 @@ export function getCardDeckBylevel(level) {
   }
 }
 
+export function getStringWithLevelMessage(level) {
+  let str = "Level: ";
+  switch(level) {
+    case "extra-easy" : return str + "Very Easy"; 
+    case "easy"       : return str + "Easy"; 
+    case "normal"     : return str + "Normal"; 
+    case "hard"       : return str + "Hard"; 
+    case "extra-hard" : return str + "Horror"; 
+  }
+}
+
 export function getCardDeck(boolNoExtra, first, second, third = '') {
   let array = [
     [
