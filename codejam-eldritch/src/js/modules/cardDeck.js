@@ -2,13 +2,13 @@ import {brownCardsData} from "../../../data/mythicCards/brown/index.js";
 import {blueCardsData} from "../../../data/mythicCards/blue/index.js";
 import {greenCardsData} from "../../../data/mythicCards/green/index.js";
 
-export function getCardDeckBylevel(level) {
+export function getCardDeckBylevel(scheme, level) {
   switch(level) {
-    case "extra-easy" : return getCardDeck(false, "normal", "easy"); 
-    case "easy"       : return getCardDeck(true, "easy", "normal"); 
-    case "normal"     : return getCardDeck(true, "easy", "hard", "normal"); 
-    case "hard"       : return getCardDeck(true, "hard", "normal"); 
-    case "extra-hard" : return getCardDeck(false, "normal", "hard"); 
+    case "extra-easy" : return getCardDeck(scheme, false, "normal", "easy"); 
+    case "easy"       : return getCardDeck(scheme, true, "easy", "normal"); 
+    case "normal"     : return getCardDeck(scheme, true, "easy", "hard", "normal"); 
+    case "hard"       : return getCardDeck(scheme, true, "hard", "normal"); 
+    case "extra-hard" : return getCardDeck(scheme, false, "normal", "hard"); 
   }
 }
 
@@ -23,7 +23,15 @@ export function getStringWithLevelMessage(level) {
   }
 }
 
-export function getCardDeck(boolNoExtra, first, second, third = '') {
+function countColor(scheme, num) {
+  let count = 0;
+  for( let i = 0; i < scheme.length; ++i) {
+    count += scheme[i][num]; 
+  }
+  return count;
+}
+
+export function getCardDeck(scheme, boolNoExtra, first, second, third = '') {
   let array = [
     [
       ...interfereCardDesk(greenCardsData.filter(elem=>elem.difficulty == first)),
@@ -43,6 +51,14 @@ export function getCardDeck(boolNoExtra, first, second, third = '') {
   ];
   if(boolNoExtra) {
     array.forEach(elem=>interfereCardDesk(elem));
+  } else {
+      let res = [
+      array[0].splice(array[0].length - countColor(scheme, 0), countColor(scheme, 0)),
+      array[1].splice(array[1].length - countColor(scheme, 1), countColor(scheme, 1)),
+      array[2].splice(array[2].length - countColor(scheme, 2), countColor(scheme, 2))
+      ];
+    res.forEach(elem=>interfereCardDesk(elem));
+    return res;
   }
   return array;
 }
